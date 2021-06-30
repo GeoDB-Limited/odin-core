@@ -19,13 +19,18 @@ const (
 )
 
 type BlockAverageBlockSizeRequest struct {
-	StartDate time.Time `json:"start_time"`
-	EndDate   time.Time `json:"end_time"`
+	StartDate time.Time `json:"start_date"`
+	EndDate   time.Time `json:"end_date"`
 }
 
 type AverageBlockSize struct {
 	Date        time.Time `json:"date"`
-	AverageSize uint64    `json:"average_size"`
+	AverageSize uint64    `json:"bytes"`
+}
+
+type AverageTxsVolume struct {
+	Date      time.Time `json:"date"`
+	TxsVolume uint64    `json:"txs_volume"`
 }
 
 func GetAvgBlockSize(clientCtx client.Context) http.HandlerFunc {
@@ -58,6 +63,39 @@ func GetAvgBlockSize(clientCtx client.Context) http.HandlerFunc {
 		}
 
 		rest.PostProcessResponseBare(w, clientCtx, averageBlockSize)
+	}
+}
+
+func GetDailyTxsVolume(clientCtx client.Context) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		var request BlockAverageBlockSizeRequest
+		err := json.NewDecoder(r.Body).Decode(&request)
+		if err != nil {
+			rest.WriteErrorResponse(w, http.StatusBadRequest, err.Error())
+			return
+		}
+
+		var dailyTxsVolume []AverageTxsVolume
+
+		blocksByDates, err := GetBlocksByDates(clientCtx, request.StartDate, request.EndDate)
+		if err != nil {
+			rest.WriteErrorResponse(w, http.StatusInternalServerError, err.Error())
+			return
+		}
+
+		for key, value := range blocksByDates {
+			txsVolume := 0
+			for _, block := range value {
+				txsVolume += len(block.Data.Txs)
+			}
+
+			dailyTxsVolume = append(dailyTxsVolume, AverageTxsVolume{
+				Date:      key,
+				TxsVolume: uint64(txsVolume),
+			})
+		}
+
+		rest.PostProcessResponseBare(w, clientCtx, dailyTxsVolume)
 	}
 }
 
@@ -96,7 +134,7 @@ func GetBlocksByDates(clientCtx client.Context, startDate, endDate time.Time) (m
 
 		for _, r := range result.Blocks {
 			blockDate := TimeToUTCDate(r.Block.Header.Time)
-			if blockDate.After(startDate) && blockDate.Before(endDate) {
+			if blockDate.Equal(startDate) || blockDate.After(startDate) && blockDate.Equal(endDate) || blockDate.Before(endDate) {
 				blocksPerDay[blockDate] = append(blocksPerDay[blockDate], r.Block)
 			}
 		}

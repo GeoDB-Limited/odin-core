@@ -15,4 +15,6 @@ func RegisterRoutes(clientCtx client.Context, r *mux.Router) {
 	r.HandleFunc(fmt.Sprintf("/%s/genesis", RouterKey), GetGenesisHandlerFn(clientCtx)).Methods("GET")
 	r.HandleFunc(fmt.Sprintf("/%s/evm-validators", RouterKey), GetEVMValidators(clientCtx)).Methods("GET")
 	r.HandleFunc(fmt.Sprintf("/%s/avg_block_size", RouterKey), GetAvgBlockSize(clientCtx)).Methods("GET")
+	r.HandleFunc(fmt.Sprintf("/%s/daily_txs_volume", RouterKey), GetDailyTxsVolume(clientCtx)).Methods("GET")
+
 }
