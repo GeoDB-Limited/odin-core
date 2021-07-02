@@ -3482,7 +3482,7 @@ func (m *MsgReportData) Unmarshal(dAtA []byte) error {
 			iNdEx = postIndex
 		case 3:
 			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Validator", wireType)
+				return fmt.Errorf("proto: wrong wireType = %d for field ValidatorAddress", wireType)
 			}
 			var stringLen uint64
 			for shift := uint(0); ; shift += 7 {
@@ -4928,7 +4928,7 @@ func (m *MsgActivate) Unmarshal(dAtA []byte) error {
 		switch fieldNum {
 		case 1:
 			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Validator", wireType)
+				return fmt.Errorf("proto: wrong wireType = %d for field ValidatorAddress", wireType)
 			}
 			var stringLen uint64
 			for shift := uint(0); ; shift += 7 {
@@ -5060,7 +5060,7 @@ func (m *MsgAddReporter) Unmarshal(dAtA []byte) error {
 		switch fieldNum {
 		case 1:
 			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Validator", wireType)
+				return fmt.Errorf("proto: wrong wireType = %d for field ValidatorAddress", wireType)
 			}
 			var stringLen uint64
 			for shift := uint(0); ; shift += 7 {
@@ -5224,7 +5224,7 @@ func (m *MsgRemoveReporter) Unmarshal(dAtA []byte) error {
 		switch fieldNum {
 		case 1:
 			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Validator", wireType)
+				return fmt.Errorf("proto: wrong wireType = %d for field ValidatorAddress", wireType)
 			}
 			var stringLen uint64
 			for shift := uint(0); ; shift += 7 {

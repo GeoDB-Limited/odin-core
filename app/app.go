@@ -1,6 +1,7 @@
 package band
 
 import (
+	"github.com/GeoDB-Limited/odin-core/client/rest"
 	"github.com/GeoDB-Limited/odin-core/x/auction"
 	auctionkeeper "github.com/GeoDB-Limited/odin-core/x/auction/keeper"
 	auctiontypes "github.com/GeoDB-Limited/odin-core/x/auction/types"
@@ -96,7 +97,6 @@ import (
 	oraclekeeper "github.com/GeoDB-Limited/odin-core/x/oracle/keeper"
 	oracletypes "github.com/GeoDB-Limited/odin-core/x/oracle/types"
 
-	odinclient "github.com/GeoDB-Limited/odin-core/client"
 	bandbankkeeper "github.com/GeoDB-Limited/odin-core/x/bank/keeper"
 	owasm "github.com/bandprotocol/go-owasm/api"
 )
@@ -637,7 +637,7 @@ func (app *BandApp) RegisterAPIRoutes(apiSvr *api.Server, apiConfig config.APICo
 	ModuleBasics.RegisterRESTRoutes(clientCtx, apiSvr.Router)
 	ModuleBasics.RegisterGRPCGatewayRoutes(clientCtx, apiSvr.GRPCGatewayRouter)
 
-	odinclient.RegisterRoutes(clientCtx, apiSvr.Router)
+	rest.RegisterRoutes(clientCtx, apiSvr.Router)
 
 	// register swagger API from root so that other applications can override easily
 	if apiConfig.Swagger {

@@ -121,7 +121,7 @@ func TestProcessExpiredRequests(t *testing.T) {
 	// Initially all validators are active.
 	require.True(t, k.GetValidatorStatus(ctx, testapp.Validators[0].ValAddress).IsActive)
 	require.True(t, k.GetValidatorStatus(ctx, testapp.Validators[1].ValAddress).IsActive)
-	// Validator 1 reports all requests. Validator 2 misses request#3.
+	// ValidatorAddress 1 reports all requests. ValidatorAddress 2 misses request#3.
 	rawReports := []types.RawReport{types.NewRawReport(42, 0, BasicReport), types.NewRawReport(43, 0, BasicReport)}
 	k.AddReport(ctx, 1, types.NewReport(testapp.Validators[0].ValAddress, false, rawReports))
 	k.AddReport(ctx, 2, types.NewReport(testapp.Validators[0].ValAddress, true, rawReports))

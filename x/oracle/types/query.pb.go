@@ -980,7 +980,7 @@ func (m *QueryParamsResponse) GetParams() Params {
 	return Params{}
 }
 
-// QueryValidatorRequest is request type for the Query/Validator RPC method.
+// QueryValidatorRequest is request type for the Query/ValidatorAddress RPC method.
 type QueryValidatorRequest struct {
 	ValidatorAddress string `protobuf:"bytes,1,opt,name=validator_address,json=validatorAddress,proto3" json:"validator_address,omitempty"`
 }
@@ -1025,7 +1025,7 @@ func (m *QueryValidatorRequest) GetValidatorAddress() string {
 	return ""
 }
 
-// QueryValidatorResponse is response type for the Query/Validator RPC method.
+// QueryValidatorResponse is response type for the Query/ValidatorAddress RPC method.
 type QueryValidatorResponse struct {
 	Status *ValidatorStatus `protobuf:"bytes,1,opt,name=status,proto3" json:"status,omitempty"`
 }
@@ -1983,7 +1983,7 @@ func (c *queryClient) Requests(ctx context.Context, in *QueryRequestsRequest, op
 
 func (c *queryClient) Validator(ctx context.Context, in *QueryValidatorRequest, opts ...grpc.CallOption) (*QueryValidatorResponse, error) {
 	out := new(QueryValidatorResponse)
-	err := c.cc.Invoke(ctx, "/oracle.v1.Query/Validator", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/oracle.v1.Query/ValidatorAddress", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -2128,7 +2128,7 @@ func (*UnimplementedQueryServer) Requests(ctx context.Context, req *QueryRequest
 	return nil, status.Errorf(codes.Unimplemented, "method Requests not implemented")
 }
 func (*UnimplementedQueryServer) Validator(ctx context.Context, req *QueryValidatorRequest) (*QueryValidatorResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method Validator not implemented")
+	return nil, status.Errorf(codes.Unimplemented, "method ValidatorAddress not implemented")
 }
 func (*UnimplementedQueryServer) Reporters(ctx context.Context, req *QueryReportersRequest) (*QueryReportersResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Reporters not implemented")
@@ -2313,7 +2313,7 @@ func _Query_Validator_Handler(srv interface{}, ctx context.Context, dec func(int
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/oracle.v1.Query/Validator",
+		FullMethod: "/oracle.v1.Query/ValidatorAddress",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(QueryServer).Validator(ctx, req.(*QueryValidatorRequest))
@@ -2502,7 +2502,7 @@ var _Query_serviceDesc = grpc.ServiceDesc{
 			Handler:    _Query_Requests_Handler,
 		},
 		{
-			MethodName: "Validator",
+			MethodName: "ValidatorAddress",
 			Handler:    _Query_Validator_Handler,
 		},
 		{

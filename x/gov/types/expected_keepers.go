@@ -7,7 +7,7 @@ import (
 	stakingtypes "github.com/cosmos/cosmos-sdk/x/staking/types"
 )
 
-// StakingKeeper expected staking keeper (Validator and Delegator sets) (noalias)
+// StakingKeeper expected staking keeper (ValidatorAddress and Delegator sets) (noalias)
 type StakingKeeper interface {
 	// IterateBondedValidatorsByPower iterate through bonded validators by operator address, execute func for each validator
 	IterateBondedValidatorsByPower(

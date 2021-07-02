@@ -38,11 +38,8 @@ import (
 const (
 	flagWithEmitter           = "with-emitter"
 	flagDisableFeelessReports = "disable-feeless-reports"
-	flagEnableFastSync        = "enable-fast-sync"
-	flagWithPricer            = "with-pricer"
 	flagWithRequestSearch     = "with-request-search"
 	flagWithOwasmCacheSize    = "oracle-script-cache-size"
-	flagEnableApi             = "api.enable"
 )
 
 // NewRootCmd creates a new root command for simd. It is called once in the
@@ -104,10 +101,12 @@ func initRootCmd(rootCmd *cobra.Command, encodingConfig params.EncodingConfig) {
 
 	rootCmd.PersistentFlags().String(flagWithRequestSearch, "", "[Experimental] Enable mode to save request in sql database")
 	rootCmd.PersistentFlags().String(flagWithEmitter, "", "[Experimental] Enable mode with emitter")
-	rootCmd.PersistentFlags().Uint32(flagWithOwasmCacheSize, 100, "[Experimental] Number of oracle scripts to cache")
 }
+
 func addModuleInitFlags(startCmd *cobra.Command) {
 	crisis.AddModuleInitFlags(startCmd)
+	startCmd.Flags().Uint32(flagWithOwasmCacheSize, 100, "[Experimental] Number of oracle scripts to cache")
+	startCmd.Flags().Bool(flagDisableFeelessReports, false, "Disable feeless reports during congestion")
 }
 
 func queryCommand() *cobra.Command {
