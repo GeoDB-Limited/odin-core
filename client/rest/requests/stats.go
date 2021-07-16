@@ -1,8 +1,7 @@
-package rest
+package requests
 
 import (
 	"encoding/json"
-	rpc "github.com/GeoDB-Limited/odin-core/client"
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 	"net/http"
 	"time"
@@ -26,7 +25,7 @@ func NewStatsRequest(r *http.Request) (*StatsRequest, error) {
 func (r StatsRequest) Validate() error {
 	ok := r.StartDate.Before(r.EndDate)
 	if !ok {
-		return sdkerrors.Wrapf(rpc.ErrInvalidDateOrder, "invalid stats request")
+		return sdkerrors.Wrapf(sdkerrors.ErrInvalidRequest, "invalid dates order")
 	}
 	return nil
 }
